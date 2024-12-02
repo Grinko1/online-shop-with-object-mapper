@@ -4,6 +4,8 @@ import com.example.onlineShop.model.Product;
 import com.example.onlineShop.service.ProductService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,23 +17,23 @@ public class ProductController {
     private final ProductService productService;
 
     @GetMapping
-    public List<Product> getAllProducts() {
-        return productService.getAllProducts();
+    public ResponseEntity<List<Product>> getAllProducts() {
+        return new ResponseEntity<>(productService.getAllProducts(), HttpStatus.OK);
     }
 
     @GetMapping("/{productId}")
-    public Product getProductById(@PathVariable Long productId) {
-        return productService.getProductById(productId);
+    public ResponseEntity<Product> getProductById(@PathVariable Long productId) {
+        return new ResponseEntity<>( productService.getProductById(productId), HttpStatus.OK);
     }
 
     @PostMapping
-    public Product createProduct(@RequestBody @Valid Product product) {
-        return productService.createProduct(product);
+    public ResponseEntity<Product> createProduct(@RequestBody @Valid Product product) {
+        return new ResponseEntity<>(productService.createProduct(product), HttpStatus.CREATED);
     }
 
     @PutMapping("/{productId}")
-    public Product updateProduct(@PathVariable Long productId, @RequestBody @Valid Product productDetails) {
-        return productService.updateProduct(productId, productDetails);
+    public ResponseEntity<Product> updateProduct(@PathVariable Long productId, @RequestBody @Valid Product productDetails) {
+        return new ResponseEntity<>( productService.updateProduct(productId, productDetails), HttpStatus.OK);
     }
 
     @DeleteMapping("/{productId}")

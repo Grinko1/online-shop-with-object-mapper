@@ -5,6 +5,8 @@ import com.example.onlineShop.model.ShopOrder;
 import com.example.onlineShop.service.OrderService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,8 +18,8 @@ public class OrderController {
     private final OrderService orderService;
 
     @PostMapping
-    public ShopOrder createOrder(@RequestBody @Valid OrderRequestDto order) {
-        return orderService.createOrder(order);
+    public ResponseEntity<ShopOrder> createOrder(@RequestBody @Valid OrderRequestDto order) {
+        return new ResponseEntity<>(orderService.createOrder(order), HttpStatus.CREATED);
     }
 
     @GetMapping("/{orderId}")
